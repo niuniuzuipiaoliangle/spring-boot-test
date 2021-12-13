@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:dubbo="http://dubbo.apache.org/schema/dubbo" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd        http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+    <dubbo:application name="${sse.dubbo.application.name}">
+        <dubbo:parameter key="qos.enable" value="false"/>
+    </dubbo:application>
+    <dubbo:provider filter="default" />
+    <dubbo:registry id="registry-fxfx-js" address="${sse.dubbo.registry.address}" />
+    <dubbo:protocol payload="536870912" id="dubbo4" name="${sse.dubbo.application.name}" port="${sse.dubbo.protocol.port}" threadpool="cached" threads="100" dispatcher="all"/>
+    <dubbo:consumer check="false" timeout="${sse.dubbo.consumer.timeout}" filter="logConsumerFilter,default" registry="registry-fxfx-js">
+
+        <dubbo:reference id="AnalysisEngineRunService"
+                         interface="cn.com.servyou.analysisengine.api.service.AnalysisEngineRunService" retries="0"
+                         version="1.0.0"  timeout="5000"/>
+    </dubbo:consumer>
+</beans>
+
